@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Cinzel:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-cinzel: 'Cinzel', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  
+  --bg-deep: #080809;
+  --bg-card: #121214;
+  --bg-surface: #17171B;
+  
+  --gold-primary: #D4AF37;
+  --gold-champagne: #E5C378;
+  --gold-light: #F5E6C8;
+  --gold-glow: rgba(212, 175, 55, 0.18);
+  
+  --text-primary: #FAFAF9;
+  --text-muted: #A8A29E;
+  --text-dim: #71717A;
+}
+
+html {
+  background-color: #080809;
+  color: #FAFAF9;
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #080809;
+  color: #FAFAF9;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography Utility Classes */
+.font-serif-editorial {
+  font-family: var(--font-serif);
+}
+
+.font-cinzel {
+  font-family: var(--font-cinzel);
+}
+
+.font-sans-clean {
+  font-family: var(--font-sans);
+}
+
+/* Luxury Editorial Image Feathering & Masking */
+.hero-image-mask {
+  mask-image: linear-gradient(to right, black 50%, rgba(0, 0, 0, 0.6) 80%, transparent 100%),
+              linear-gradient(to bottom, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 50%, rgba(0, 0, 0, 0.6) 80%, transparent 100%),
+                      linear-gradient(to bottom, black 70%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+}
+
+@media (max-width: 1024px) {
+  .hero-image-mask {
+    mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+  }
+}
+
+.editorial-vignette {
+  box-shadow: inset 0 0 80px 20px #080809;
+}
+
+/* Gold Gradient Accents */
+.gold-text-gradient {
+  background: linear-gradient(135deg, #F5E6C8 0%, #D4AF37 50%, #C5A059 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-border-gradient {
+  border-image: linear-gradient(to bottom right, rgba(212, 175, 55, 0.4), rgba(255, 255, 255, 0.05)) 1;
+}
+
+/* Luxury Editorial Cards (Joshua Bell Style) */
+.editorial-card {
+  background: #121215;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.editorial-card:hover {
+  border-color: rgba(212, 175, 55, 0.38);
+  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.8), 0 0 25px rgba(212, 175, 55, 0.08);
+  transform: translateY(-3px);
+}
+
+/* Capsule Buttons */
+.btn-capsule-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #D4AF37 0%, #B89230 100%);
+  color: #080809;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25);
+}
+
+.btn-capsule-gold:hover {
+  background: linear-gradient(135deg, #F5E6C8 0%, #D4AF37 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
+}
+
+.btn-capsule-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #FAFAF9;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-capsule-outline:hover {
+  border-color: rgba(212, 175, 55, 0.6);
+  background: rgba(212, 175, 55, 0.08);
+  color: #F5E6C8;
+  transform: translateY(-2px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #080809;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272A;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D4AF37;
+}
+
+/* Text Selection */
+::selection {
+  background-color: #D4AF37;
+  color: #080809;
+}
+
+/* Reduced Motion Safety */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
