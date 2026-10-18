@@ -10,7 +10,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 60);
+      setScrolled(window.scrollY > 40);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -30,25 +30,25 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full ${
         scrolled
-          ? "bg-[#080809]/90 backdrop-blur-md py-3.5 border-b border-white/[0.07] shadow-2xl"
-          : "bg-transparent py-6 border-b border-transparent"
+          ? "bg-[#080809]/95 backdrop-blur-md py-4 border-b border-white/[0.08] shadow-2xl shadow-black/80"
+          : "bg-[#080809]/60 backdrop-blur-sm py-5 border-b border-white/[0.03]"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between">
+      <div className="w-full max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between gap-4">
         {/* Brand / Logo */}
-        <a href="#hero" className="group flex flex-col tracking-widest">
+        <a href="#hero" className="shrink-0 flex flex-col tracking-widest group">
           <span className="font-serif-editorial text-xl sm:text-2xl font-light text-white tracking-[0.22em] group-hover:text-[#E5C378] transition-colors duration-300">
             LAURA OLIVEIRA
           </span>
-          <span className="text-[9px] sm:text-[10px] tracking-[0.35em] text-[#A8A29E] uppercase font-light -mt-1 group-hover:text-white transition-colors duration-300">
+          <span className="text-[9px] sm:text-[10px] tracking-[0.35em] text-[#D4AF37] uppercase font-semibold -mt-1 group-hover:text-white transition-colors duration-300">
             Fotografia &amp; Vídeo
           </span>
         </a>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-8 text-[13px] tracking-[0.14em] uppercase font-medium text-[#A8A29E]">
+        {/* Desktop Navigation Links (Centered) */}
+        <nav className="hidden lg:flex items-center justify-center gap-7 text-[12px] tracking-[0.16em] uppercase font-medium text-stone-300">
           {navLinks.map((link) => (
             <a
               key={link.label}
@@ -60,14 +60,14 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Action Button & Social */}
-        <div className="hidden sm:flex items-center gap-4">
+        {/* Action Button & Social (Right Aligned) */}
+        <div className="hidden sm:flex items-center gap-4 shrink-0">
           <a
             href="https://www.instagram.com/lauraoliveirafotosjba/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram Laura Oliveira"
-            className="p-2 text-[#A8A29E] hover:text-[#E5C378] transition-colors duration-200"
+            className="p-2 text-stone-400 hover:text-[#E5C378] transition-colors duration-200"
           >
             <InstagramIcon className="w-4 h-4" />
           </a>
@@ -86,7 +86,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Hamburger Toggle */}
-        <div className="flex sm:hidden items-center gap-3">
+        <div className="flex lg:hidden items-center gap-3">
           <a
             href={waUrl}
             target="_blank"
@@ -108,7 +108,7 @@ export default function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="sm:hidden bg-[#0c0c0e] border-b border-white/10 px-6 py-6 space-y-4 animate-in slide-in-from-top duration-300">
+        <div className="lg:hidden bg-[#0c0c0e] border-b border-white/10 px-6 py-6 space-y-4 animate-in slide-in-from-top duration-300">
           <div className="flex flex-col space-y-3 pb-4 border-b border-white/10">
             {navLinks.map((link) => (
               <a

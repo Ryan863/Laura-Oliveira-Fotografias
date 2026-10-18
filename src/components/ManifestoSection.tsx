@@ -25,29 +25,39 @@ export default function ManifestoSection() {
 
   useGSAP(
     () => {
-      gsap.from(".manifesto-reveal", {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 75%",
-        },
-        y: 40,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.15,
-        ease: "power2.out",
-      });
+      gsap.fromTo(
+        ".manifesto-reveal",
+        { y: 30, opacity: 0 },
+        {
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 80%",
+          },
+          y: 0,
+          opacity: 1,
+          duration: 0.9,
+          stagger: 0.12,
+          ease: "power2.out",
+          clearProps: "all",
+        }
+      );
 
-      gsap.from(".manifesto-card", {
-        scrollTrigger: {
-          trigger: ".manifesto-grid",
-          start: "top 80%",
-        },
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.12,
-        ease: "power2.out",
-      });
+      gsap.fromTo(
+        ".manifesto-card",
+        { y: 30, opacity: 0 },
+        {
+          scrollTrigger: {
+            trigger: ".manifesto-grid",
+            start: "top 85%",
+          },
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power2.out",
+          clearProps: "all",
+        }
+      );
     },
     { scope: containerRef }
   );
@@ -93,7 +103,7 @@ export default function ManifestoSection() {
       ref={containerRef}
       className="py-24 sm:py-32 bg-[#09090B] border-t border-white/[0.04] relative overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-5 sm:px-8">
+      <div className="w-full max-w-7xl mx-auto px-5 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Joshua Bell Layout (Headline + Narrative + Vertical Couple Photo) */}
           <div className="lg:col-span-5 space-y-8">

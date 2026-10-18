@@ -6,10 +6,6 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { MessageCircle, ArrowDown, Sparkles, MapPin, CheckCircle2 } from "lucide-react";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(useGSAP);
-}
-
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const waUrl =
@@ -17,60 +13,31 @@ export default function HeroSection() {
 
   useGSAP(
     () => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      // Safe fromTo animation that clears inline props on completion to avoid React 19 remount bugs
+      gsap.fromTo(
+        ".hero-anim-item",
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power2.out",
+          clearProps: "all",
+        }
+      );
 
-      tl.from(".hero-photo", {
-        opacity: 0,
-        scale: 0.95,
-        duration: 1.2,
-      })
-        .from(
-          ".hero-kicker",
-          {
-            opacity: 0,
-            y: 20,
-            duration: 0.8,
-          },
-          "-=0.8"
-        )
-        .from(
-          ".hero-title-line",
-          {
-            opacity: 0,
-            y: 30,
-            duration: 0.9,
-            stagger: 0.15,
-          },
-          "-=0.6"
-        )
-        .from(
-          ".hero-description",
-          {
-            opacity: 0,
-            y: 20,
-            duration: 0.8,
-          },
-          "-=0.5"
-        )
-        .from(
-          ".hero-cta-group",
-          {
-            opacity: 0,
-            y: 20,
-            duration: 0.8,
-          },
-          "-=0.5"
-        )
-        .from(
-          ".hero-badges",
-          {
-            opacity: 0,
-            y: 15,
-            duration: 0.8,
-            stagger: 0.1,
-          },
-          "-=0.4"
-        );
+      gsap.fromTo(
+        ".hero-photo-wrapper",
+        { opacity: 0, scale: 0.96 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 1,
+          ease: "power2.out",
+          clearProps: "all",
+        }
+      );
     },
     { scope: containerRef }
   );
@@ -79,23 +46,23 @@ export default function HeroSection() {
     <section
       id="hero"
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center pt-24 pb-16 lg:pt-0 lg:pb-0 overflow-hidden bg-[#080809]"
+      className="relative min-h-screen flex items-center justify-center pt-28 pb-16 lg:py-0 overflow-hidden bg-[#080809]"
     >
       {/* Subtle ambient luxury backdrop light */}
-      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#D4AF37]/5 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#D4AF37]/5 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center min-h-[85vh]">
+      <div className="w-full max-w-7xl mx-auto px-5 sm:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center min-h-[82vh]">
           {/* Left Column: Portrait of Laura Oliveira with Camera (Joshua Bell reference style) */}
-          <div className="lg:col-span-6 relative flex justify-center lg:justify-start order-2 lg:order-1">
-            <div className="relative w-full max-w-[480px] aspect-[4/5] sm:aspect-[3/4] lg:aspect-[4/5] overflow-hidden rounded-2xl lg:rounded-none">
-              {/* Radial and gradient blend masks to melt image smoothly into deep dark background */}
-              <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-t from-[#080809] via-transparent to-transparent lg:hidden" />
-              <div className="absolute inset-0 z-10 pointer-events-none hidden lg:block bg-gradient-to-r from-transparent via-transparent to-[#080809] opacity-90" />
-              <div className="absolute inset-0 z-10 pointer-events-none hidden lg:block bg-gradient-to-t from-[#080809] via-transparent to-transparent" />
+          <div className="relative flex justify-center lg:justify-start w-full order-1">
+            <div className="hero-photo-wrapper relative w-full max-w-[460px] aspect-[4/5] sm:aspect-[3/4] lg:aspect-[4/5] rounded-3xl overflow-hidden bg-[#080809] shadow-2xl border border-white/[0.04]">
+              {/* Seamless feathering masks & ambient studio vignettes eliminating any white edges */}
+              <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-t from-[#080809] via-transparent to-[#080809]/50" />
+              <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-r from-[#080809]/60 via-transparent to-[#080809]/80" />
+              <div className="absolute inset-0 z-10 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_45%,#080809_96%)]" />
 
-              <div className="hero-photo relative w-full h-full filter contrast-[1.05] brightness-95">
+              <div className="relative w-full h-full filter contrast-[1.04] brightness-95">
                 <Image
                   src="/assets/laura/hero-laura.jpg"
                   alt="Laura Oliveira - Fotógrafa e Videógrafa Profissional com câmera Nikon"
@@ -107,7 +74,7 @@ export default function HeroSection() {
               </div>
 
               {/* Floating aesthetic camera badge */}
-              <div className="absolute bottom-6 left-6 z-20 backdrop-blur-md bg-black/60 border border-white/10 px-4 py-2 rounded-full hidden sm:flex items-center gap-2 text-xs text-stone-300">
+              <div className="absolute bottom-6 left-6 z-20 backdrop-blur-md bg-black/70 border border-white/15 px-4 py-2 rounded-full hidden sm:flex items-center gap-2.5 text-xs text-stone-300 shadow-xl">
                 <span className="w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse" />
                 <span className="tracking-widest uppercase text-[10px] font-medium text-stone-200">
                   Fotografia &amp; Direção Autoral
@@ -117,9 +84,9 @@ export default function HeroSection() {
           </div>
 
           {/* Right Column: Editorial Typography & Conversion Triggers */}
-          <div className="lg:col-span-6 flex flex-col justify-center order-1 lg:order-2 space-y-6 lg:space-y-8 pt-6 lg:pt-0">
+          <div className="flex flex-col justify-center space-y-6 lg:space-y-8 w-full z-20 order-2">
             {/* Eyebrow Kicker */}
-            <div className="hero-kicker inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-sm self-start">
+            <div className="hero-anim-item inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-sm self-start">
               <MapPin className="w-3.5 h-3.5 text-[#D4AF37]" />
               <span className="text-[11px] tracking-[0.25em] text-stone-300 uppercase font-semibold">
                 Herval d&apos;Oeste &amp; Joaçaba — SC
@@ -127,17 +94,17 @@ export default function HeroSection() {
             </div>
 
             {/* Main Headline (Joshua Bell Style) */}
-            <div className="space-y-1">
-              <h2 className="hero-title-line font-cinzel text-3xl sm:text-4xl md:text-5xl font-light text-stone-300 tracking-wider">
+            <div className="space-y-1.5">
+              <h2 className="hero-anim-item font-cinzel text-3xl sm:text-4xl md:text-5xl font-light text-stone-300 tracking-wider">
                 OLÁ!
               </h2>
-              <h1 className="hero-title-line font-cinzel text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-wide">
+              <h1 className="hero-anim-item font-cinzel text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-wide">
                 SOU <span className="gold-text-gradient">LAURA OLIVEIRA</span>
               </h1>
             </div>
 
             {/* Subtitle / Value Proposition */}
-            <p className="hero-description text-base sm:text-lg text-[#A8A29E] font-normal leading-relaxed max-w-xl">
+            <p className="hero-anim-item text-base sm:text-lg text-[#A8A29E] font-normal leading-relaxed max-w-xl">
               Registrando emoções e criando memórias que duram para sempre. Ensaios acolhedores de{" "}
               <strong className="text-stone-200 font-medium">gestante</strong>,{" "}
               <strong className="text-stone-200 font-medium">casamento civil</strong>,{" "}
@@ -146,7 +113,7 @@ export default function HeroSection() {
             </p>
 
             {/* Action Buttons */}
-            <div className="hero-cta-group flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+            <div className="hero-anim-item flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
               <a
                 href={waUrl}
                 target="_blank"
@@ -167,7 +134,7 @@ export default function HeroSection() {
             </div>
 
             {/* Micro Trust Indicators */}
-            <div className="hero-badges pt-4 border-t border-white/[0.08] grid grid-cols-3 gap-3 max-w-lg">
+            <div className="hero-anim-item pt-4 border-t border-white/[0.08] grid grid-cols-3 gap-3 max-w-lg">
               <div className="space-y-1">
                 <div className="flex items-center gap-1.5 text-xs font-semibold text-white">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#D4AF37]" />
